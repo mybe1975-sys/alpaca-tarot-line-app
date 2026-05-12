@@ -1,0 +1,449 @@
+:root {
+  color: #46384f;
+  background: #f7efe3;
+  font-family:
+    "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", Meiryo, system-ui, -apple-system, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #f7efe3;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.85) 0 9rem, transparent 9.5rem),
+    linear-gradient(145deg, #fbf5eb 0%, #f1e5f5 54%, #e9f0e5 100%);
+}
+
+.screen {
+  width: min(100%, 480px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.start-screen {
+  text-align: center;
+}
+
+.title-area,
+.compact-header {
+  display: grid;
+  gap: 10px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #80669a;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  color: #3f3049;
+  font-size: clamp(1.65rem, 8vw, 2.25rem);
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.compact-header h1 {
+  font-size: clamp(1.35rem, 6vw, 1.85rem);
+}
+
+.lead {
+  max-width: 19rem;
+  margin: 0 auto;
+  color: #6c5b62;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.primary-button {
+  width: min(100%, 21rem);
+  min-height: 58px;
+  border: 0;
+  border-radius: 999px;
+  color: #fffdf7;
+  background: linear-gradient(135deg, #8968aa, #b16f93);
+  box-shadow: 0 14px 26px rgba(87, 58, 113, 0.24);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  touch-action: manipulation;
+}
+
+.primary-button:active {
+  transform: translateY(1px);
+}
+
+.secondary-tone {
+  background: linear-gradient(135deg, #7464a1, #9b7aaf);
+}
+
+.alpaca-mark {
+  position: relative;
+  width: 142px;
+  height: 160px;
+  margin-top: 4px;
+}
+
+.alpaca-face {
+  position: absolute;
+  inset: 28px 15px 0;
+  border-radius: 46% 46% 42% 42%;
+  background:
+    radial-gradient(circle at 34% 42%, #4a3a4d 0 4px, transparent 4.5px),
+    radial-gradient(circle at 66% 42%, #4a3a4d 0 4px, transparent 4.5px),
+    linear-gradient(180deg, #fff8ed, #ecd9c4);
+  border: 3px solid rgba(118, 92, 127, 0.16);
+  box-shadow: 0 16px 32px rgba(92, 67, 72, 0.18);
+}
+
+.alpaca-ear {
+  position: absolute;
+  top: 10px;
+  width: 36px;
+  height: 66px;
+  border-radius: 999px 999px 20px 20px;
+  background: #f5e6d1;
+  border: 3px solid rgba(118, 92, 127, 0.16);
+}
+
+.alpaca-ear-left {
+  left: 15px;
+  transform: rotate(-18deg);
+}
+
+.alpaca-ear-right {
+  right: 15px;
+  transform: rotate(18deg);
+}
+
+.alpaca-eye {
+  display: none;
+}
+
+.alpaca-nose {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 24px;
+  height: 18px;
+  border-radius: 50%;
+  background: #7b5b62;
+  transform: translate(-50%, -50%);
+}
+
+.alpaca-nose::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 17px;
+  width: 34px;
+  height: 16px;
+  border-bottom: 3px solid #7b5b62;
+  border-radius: 0 0 999px 999px;
+  transform: translateX(-50%);
+}
+
+.select-screen {
+  justify-content: space-around;
+}
+
+.card-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 3vw, 14px);
+  align-items: center;
+}
+
+.tarot-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.66;
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  background: transparent;
+  animation: cardEnter 420ms ease both;
+  animation-delay: var(--delay);
+}
+
+.tarot-card-button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.tarot-card-button:active {
+  transform: translateY(2px) scale(0.99);
+}
+
+.tarot-card-static {
+  width: min(48vw, 164px);
+  max-width: 164px;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid rgba(86, 62, 92, 0.18);
+  box-shadow: 0 14px 24px rgba(71, 52, 82, 0.18);
+}
+
+.card-back {
+  padding: 12px 7px;
+  color: #fffdf8;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 36%),
+    linear-gradient(155deg, #8c6aa9 0%, #c08aa7 56%, #d8b892 100%);
+}
+
+.card-back::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 7px;
+}
+
+.card-back-title {
+  z-index: 1;
+  max-width: 100%;
+  font-size: clamp(0.72rem, 3.2vw, 1rem);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.card-back-star {
+  z-index: 1;
+  align-self: end;
+  font-size: clamp(1.15rem, 7vw, 2rem);
+}
+
+.card-back-line {
+  z-index: 1;
+  width: 44%;
+  height: 2px;
+  align-self: start;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.card-front {
+  padding: 12px 8px;
+  color: #4b3955;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(247, 226, 149, 0.65) 0 34px, transparent 35px),
+    linear-gradient(180deg, #fffaf2, #eadff0);
+}
+
+.card-front::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(125, 94, 144, 0.24);
+  border-radius: 7px;
+}
+
+.card-number {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: #886b9c;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.card-symbol {
+  color: #8d6da5;
+  font-size: 2.6rem;
+}
+
+.card-name-ja,
+.card-name-en {
+  z-index: 1;
+  text-align: center;
+}
+
+.card-name-ja {
+  align-self: end;
+  color: #3f3049;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.card-name-en {
+  align-self: start;
+  color: #7c6686;
+  font-size: 0.72rem;
+}
+
+.hint-text {
+  max-width: 22rem;
+  margin: 0;
+  color: #6f5f6f;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.result-screen {
+  justify-content: flex-start;
+  gap: 18px;
+}
+
+.result-card-wrap {
+  width: min(48vw, 164px);
+  margin-top: 6px;
+}
+
+.result-panel {
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  background: rgba(255, 252, 246, 0.72);
+  box-shadow: 0 12px 28px rgba(92, 67, 72, 0.13);
+}
+
+.result-panel h1 {
+  margin-top: 4px;
+  font-size: 1.85rem;
+}
+
+.english-name {
+  margin: 4px 0 16px;
+  color: #897092;
+  font-size: 0.92rem;
+}
+
+.reading-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.reading-list div {
+  display: grid;
+  gap: 6px;
+}
+
+.reading-list dt {
+  color: #7b6394;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.reading-list dd {
+  margin: 0;
+  color: #4f4255;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.alpaca-balloon {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f2e8d9;
+}
+
+.mini-alpaca {
+  flex: 0 0 auto;
+  width: 44px;
+  min-height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: #5f4a55;
+  background: #fff8ed;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.alpaca-balloon p {
+  margin: 0;
+  color: #5b4d56;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) rotate(-1deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@media (max-width: 360px) {
+  .screen {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .card-row {
+    gap: 7px;
+  }
+
+  .result-panel {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
