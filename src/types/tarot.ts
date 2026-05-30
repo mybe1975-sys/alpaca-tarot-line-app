@@ -6,4 +6,8 @@ export type TarotCardData = {
   messages: string[];
 };
 
+export type TarotCardsResponse = {
+  cards: TarotCardData[];
+};
+
 export type AppScreen = 'start' | 'select' | 'result';

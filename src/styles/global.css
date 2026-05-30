@@ -105,6 +105,11 @@ h1 {
   touch-action: manipulation;
 }
 
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .primary-button:active {
   transform: translateY(1px);
 }
@@ -323,6 +328,16 @@ h1 {
   margin: 0;
   color: #6f5f6f;
   font-size: 0.98rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.error-text {
+  max-width: 22rem;
+  margin: 0;
+  color: #9a3d56;
+  font-size: 0.95rem;
+  font-weight: 700;
   line-height: 1.7;
   text-align: center;
 }

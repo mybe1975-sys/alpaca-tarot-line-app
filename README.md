@@ -25,6 +25,51 @@ npm run build
 
 ビルド結果は `dist/` に出力されます。
 
+## Google スプレッドシート連携
+
+タロットカードの文言は、GAS API を設定すると Google スプレッドシートから取得できます。
+未設定または取得失敗時は `src/data/tarotCards.ts` のデータをフォールバックとして使用します。
+
+`.env` または Vercel の Environment Variables に次を設定します。
+
+```env
+VITE_TAROT_API_URL=https://script.google.com/macros/s/your-deployment-id/exec
+```
+
+スプレッドシートの列は次の形を想定します。
+
+```text
+id
+nameJa
+nameEn
+meaning
+message1
+message2
+message3
+```
+
+GAS API は React 側の型に合わせて、次の JSON を返してください。
+
+```json
+{
+  "cards": [
+    {
+      "id": 0,
+      "nameJa": "愚者",
+      "nameEn": "The Fool",
+      "meaning": "新しい始まり、自由な心、思い切った一歩",
+      "messages": [
+        "今日は小さな冒険に向いています。",
+        "考えすぎた荷物を少し下ろす日です。",
+        "未知の道にも、あなたを待つやさしい発見があります。"
+      ]
+    }
+  ]
+}
+```
+
+GAS 側では `message1`, `message2`, `message3` など空でないメッセージ列を `messages` 配列にまとめて返す構成にしてください。React 側では `cards` が3件以上あり、各カードに `id`, `nameJa`, `nameEn`, `meaning`, `messages` があることを確認してから表示します。
+
 ## Vercel 向け設定
 
 このプロジェクトには `vercel.json` を追加済みです。

@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import { fetchTarotCards } from './api/tarotCards';
 import CardSelectScreen from './components/CardSelectScreen';
 import ResultScreen from './components/ResultScreen';
 import StartScreen from './components/StartScreen';
-import { tarotCards } from './data/tarotCards';
 import type { AppScreen, TarotCardData } from './types/tarot';
 
-const drawThreeCards = (): TarotCardData[] => {
-  return [...tarotCards].sort(() => Math.random() - 0.5).slice(0, 3);
+const drawThreeCards = (cards: TarotCardData[]): TarotCardData[] => {
+  return [...cards].sort(() => Math.random() - 0.5).slice(0, 3);
 };
 
 const pickMessage = (card: TarotCardData): string => {
@@ -19,12 +19,24 @@ function App() {
   const [drawnCards, setDrawnCards] = useState<TarotCardData[]>([]);
   const [selectedCard, setSelectedCard] = useState<TarotCardData | null>(null);
   const [selectedMessage, setSelectedMessage] = useState('');
+  const [isLoadingCards, setIsLoadingCards] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleStart = () => {
-    setDrawnCards(drawThreeCards());
+  const handleStart = async () => {
+    setIsLoadingCards(true);
+    setErrorMessage('');
     setSelectedCard(null);
     setSelectedMessage('');
-    setScreen('select');
+
+    try {
+      const cards = await fetchTarotCards();
+      setDrawnCards(drawThreeCards(cards));
+      setScreen('select');
+    } catch {
+      setErrorMessage('カード情報を読み込めませんでした。時間をおいてもう一度お試しください。');
+    } finally {
+      setIsLoadingCards(false);
+    }
   };
 
   const handleSelectCard = (card: TarotCardData) => {
@@ -42,7 +54,13 @@ function App() {
 
   return (
     <main className="app-shell">
-      {screen === 'start' && <StartScreen onStart={handleStart} />}
+      {screen === 'start' && (
+        <StartScreen
+          errorMessage={errorMessage}
+          isLoading={isLoadingCards}
+          onStart={handleStart}
+        />
+      )}
       {screen === 'select' && (
         <CardSelectScreen cards={drawnCards} onSelectCard={handleSelectCard} />
       )}

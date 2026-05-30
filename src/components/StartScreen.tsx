@@ -1,8 +1,10 @@
 type StartScreenProps = {
-  onStart: () => void;
+  errorMessage?: string;
+  isLoading?: boolean;
+  onStart: () => void | Promise<void>;
 };
 
-function StartScreen({ onStart }: StartScreenProps) {
+function StartScreen({ errorMessage, isLoading = false, onStart }: StartScreenProps) {
   return (
     <section className="screen start-screen" aria-labelledby="app-title">
       <div className="alpaca-mark" aria-hidden="true">
@@ -21,8 +23,10 @@ function StartScreen({ onStart }: StartScreenProps) {
         <p className="lead">今日のあなたに、アルパカから小さなメッセージ</p>
       </div>
 
-      <button className="primary-button" type="button" onClick={onStart}>
-        カードを引く
+      {errorMessage && <p className="error-text">{errorMessage}</p>}
+
+      <button className="primary-button" type="button" onClick={onStart} disabled={isLoading}>
+        {isLoading ? 'カードを読み込み中...' : 'カードを引く'}
       </button>
     </section>
   );
