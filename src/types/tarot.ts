@@ -4,6 +4,7 @@ export type TarotCardData = {
   nameEn: string;
   meaning: string;
   messages: string[];
+  imageUrl?: string;
 };
 
 export type TarotCardsResponse = {

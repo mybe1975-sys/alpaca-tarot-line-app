@@ -5,6 +5,7 @@ export const tarotCards: TarotCardData[] = [
     id: 0,
     nameJa: '愚者',
     nameEn: 'The Fool',
+    imageUrl: '/images/cards/alpaca/137103_the-fool.png',
     meaning: '新しい始まり、自由な心、思い切った一歩',
     messages: [
       '今日は小さな冒険に向いています。完璧でなくても、まず一歩進んでみましょう。',
@@ -16,6 +17,7 @@ export const tarotCards: TarotCardData[] = [
     id: 1,
     nameJa: '魔術師',
     nameEn: 'The Magician',
+    imageUrl: '/images/cards/alpaca/137104_the-magician.png',
     meaning: '創造力、準備、できることを形にする力',
     messages: [
       '今ある道具で十分です。小さく始めれば、流れは自然に整います。',
@@ -27,6 +29,7 @@ export const tarotCards: TarotCardData[] = [
     id: 2,
     nameJa: '女教皇',
     nameEn: 'The High Priestess',
+    imageUrl: '/images/cards/alpaca/137105_the-high-priestess.png',
     meaning: '直感、静けさ、内側の知恵',
     messages: [
       'すぐに答えを出さなくて大丈夫。静かな時間が、必要な答えを連れてきます。',
@@ -38,6 +41,7 @@ export const tarotCards: TarotCardData[] = [
     id: 3,
     nameJa: '女帝',
     nameEn: 'The Empress',
+    imageUrl: '/images/cards/alpaca/137106_the-empress.png',
     meaning: '実り、やさしさ、育てる力',
     messages: [
       '自分を急かすより、いたわることが実りにつながります。',
@@ -49,6 +53,7 @@ export const tarotCards: TarotCardData[] = [
     id: 4,
     nameJa: '皇帝',
     nameEn: 'The Emperor',
+    imageUrl: '/images/cards/alpaca/137107_the-emperor.png',
     meaning: '安定、責任、土台づくり',
     messages: [
       '予定や持ち物を整えると、心にも余裕が生まれます。',
@@ -60,6 +65,7 @@ export const tarotCards: TarotCardData[] = [
     id: 5,
     nameJa: '教皇',
     nameEn: 'The Hierophant',
+    imageUrl: '/images/cards/alpaca/137108_the-hierophant.png',
     meaning: '学び、信頼、受け継がれた知恵',
     messages: [
       '迷ったら、信頼できる人や基本に戻ってみましょう。',
@@ -71,6 +77,7 @@ export const tarotCards: TarotCardData[] = [
     id: 6,
     nameJa: '恋人',
     nameEn: 'The Lovers',
+    imageUrl: '/images/cards/alpaca/137109_the-lovers.png',
     meaning: '選択、調和、大切なつながり',
     messages: [
       '心がやわらぐ方を選んでみてください。大切なものが見えてきます。',
@@ -82,6 +89,7 @@ export const tarotCards: TarotCardData[] = [
     id: 7,
     nameJa: '戦車',
     nameEn: 'The Chariot',
+    imageUrl: '/images/cards/alpaca/137110_the-chariot.png',
     meaning: '前進、意志、勢いを味方にする',
     messages: [
       '迷いがあっても、今日は前へ進む力があります。短い行動から始めましょう。',
@@ -93,6 +101,7 @@ export const tarotCards: TarotCardData[] = [
     id: 8,
     nameJa: '力',
     nameEn: 'Strength',
+    imageUrl: '/images/cards/alpaca/137111_strength.png',
     meaning: 'やさしい強さ、忍耐、心のしなやかさ',
     messages: [
       '強さは大声ではなく、穏やかに続ける力の中にあります。',
@@ -104,6 +113,7 @@ export const tarotCards: TarotCardData[] = [
     id: 9,
     nameJa: '隠者',
     nameEn: 'The Hermit',
+    imageUrl: '/images/cards/alpaca/137112_the-hermit.png',
     meaning: '内省、探求、静かな導き',
     messages: [
       '少しひとりになる時間が、心の灯りを明るくします。',
@@ -115,6 +125,7 @@ export const tarotCards: TarotCardData[] = [
     id: 10,
     nameJa: '運命の輪',
     nameEn: 'Wheel of Fortune',
+    imageUrl: '/images/cards/alpaca/137113_wheel-of-fortune.png',
     meaning: '転機、流れ、タイミング',
     messages: [
       '流れが少し変わり始めています。変化を怖がらず、軽く乗ってみましょう。',
@@ -126,6 +137,7 @@ export const tarotCards: TarotCardData[] = [
     id: 11,
     nameJa: '正義',
     nameEn: 'Justice',
+    imageUrl: '/images/cards/alpaca/137114_justice.png',
     meaning: '公平、判断、バランス',
     messages: [
       '感情と事実を分けて見ると、落ち着いた答えに近づきます。',
@@ -137,6 +149,7 @@ export const tarotCards: TarotCardData[] = [
     id: 12,
     nameJa: '吊るされた男',
     nameEn: 'The Hanged Man',
+    imageUrl: '/images/cards/alpaca/137115_the-hanged-man.png',
     meaning: '視点の転換、待つ力、手放し',
     messages: [
       '今は急がないことにも意味があります。見方を変えると道が開きます。',
@@ -148,6 +161,7 @@ export const tarotCards: TarotCardData[] = [
     id: 13,
     nameJa: '死神',
     nameEn: 'Death',
+    imageUrl: '/images/cards/alpaca/137116_death.png',
     meaning: '区切り、再生、新しい段階',
     messages: [
       '終わりは怖いだけのものではありません。次の場所へ向かう準備です。',
@@ -159,6 +173,7 @@ export const tarotCards: TarotCardData[] = [
     id: 14,
     nameJa: '節制',
     nameEn: 'Temperance',
+    imageUrl: '/images/cards/alpaca/137117_temperance.png',
     meaning: '調和、回復、ほどよい加減',
     messages: [
       '今日は頑張りすぎず、休みすぎず。ちょうどよさが幸運を呼びます。',
@@ -170,6 +185,7 @@ export const tarotCards: TarotCardData[] = [
     id: 15,
     nameJa: '悪魔',
     nameEn: 'The Devil',
+    imageUrl: '/images/cards/alpaca/137118_the-devil.png',
     meaning: '執着、誘惑、気づきによる解放',
     messages: [
       '手放せないものを責めずに見つめると、少し自由になれます。',
@@ -181,6 +197,7 @@ export const tarotCards: TarotCardData[] = [
     id: 16,
     nameJa: '塔',
     nameEn: 'The Tower',
+    imageUrl: '/images/cards/alpaca/137119_the-tower.png',
     meaning: '変化、目覚め、古い形の見直し',
     messages: [
       '予定外のことがあっても、必要な見直しが始まった合図かもしれません。',
@@ -192,6 +209,7 @@ export const tarotCards: TarotCardData[] = [
     id: 17,
     nameJa: '星',
     nameEn: 'The Star',
+    imageUrl: '/images/cards/alpaca/137120_the-star.png',
     meaning: '希望、癒し、未来への明かり',
     messages: [
       '遠くの希望が、今日は少し近くに感じられそうです。',
@@ -203,6 +221,7 @@ export const tarotCards: TarotCardData[] = [
     id: 18,
     nameJa: '月',
     nameEn: 'The Moon',
+    imageUrl: '/images/cards/alpaca/137121_the-moon.png',
     meaning: '不安、想像、見えない気持ち',
     messages: [
       'はっきりしない時は、決め急がないことも大切です。',
@@ -214,6 +233,7 @@ export const tarotCards: TarotCardData[] = [
     id: 19,
     nameJa: '太陽',
     nameEn: 'The Sun',
+    imageUrl: '/images/cards/alpaca/137123_the-sun.png',
     meaning: '喜び、成功、明るい展開',
     messages: [
       '明るい知らせや、気持ちが軽くなる出来事に出会えそうです。',
@@ -225,6 +245,7 @@ export const tarotCards: TarotCardData[] = [
     id: 20,
     nameJa: '審判',
     nameEn: 'Judgement',
+    imageUrl: '/images/cards/alpaca/137122_the-judgement.png',
     meaning: '目覚め、再評価、呼びかけ',
     messages: [
       'もう一度向き合うことで、前とは違う答えが見えてきます。',
@@ -236,6 +257,7 @@ export const tarotCards: TarotCardData[] = [
     id: 21,
     nameJa: '世界',
     nameEn: 'The World',
+    imageUrl: '/images/cards/alpaca/137124_the-world.png',
     meaning: '完成、達成、調和した広がり',
     messages: [
       'ここまで来た自分を認めてよい日です。ひとつの輪がきれいに結ばれます。',

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import type { TarotCardData } from '../types/tarot';
 
 type TarotCardProps = {
@@ -33,7 +33,23 @@ function TarotCard({ card, index = 0, isFaceUp, onSelect }: TarotCardProps) {
 }
 
 function CardContent({ card, isFaceUp }: { card: TarotCardData; isFaceUp: boolean }) {
+  const [hasImageError, setHasImageError] = useState(false);
+  const imageUrl = card.imageUrl?.trim();
+
   if (isFaceUp) {
+    if (imageUrl && !hasImageError) {
+      return (
+        <div className="card-face card-front card-image-face">
+          <img
+            className="card-image"
+            src={imageUrl}
+            alt={`${card.nameJa} ${card.nameEn}`}
+            onError={() => setHasImageError(true)}
+          />
+        </div>
+      );
+    }
+
     return (
       <div className="card-face card-front">
         <span className="card-number">{String(card.id).padStart(2, '0')}</span>

@@ -3,12 +3,18 @@ import type { TarotCardData, TarotCardsResponse } from '../types/tarot';
 
 const tarotApiUrl = import.meta.env.VITE_TAROT_API_URL as string | undefined;
 
+type RawTarotCardData = Omit<TarotCardData, 'imageUrl'> & {
+  imageUrl?: unknown;
+  image_url?: unknown;
+};
+
 const isTarotCardData = (value: unknown): value is TarotCardData => {
   if (!value || typeof value !== 'object') {
     return false;
   }
 
-  const card = value as Partial<TarotCardData>;
+  const card = value as Partial<RawTarotCardData>;
+  const imageUrl = card.imageUrl ?? card.image_url;
 
   return (
     typeof card.id === 'number' &&
@@ -17,8 +23,22 @@ const isTarotCardData = (value: unknown): value is TarotCardData => {
     typeof card.meaning === 'string' &&
     Array.isArray(card.messages) &&
     card.messages.length > 0 &&
-    card.messages.every((message) => typeof message === 'string' && message.trim().length > 0)
+    card.messages.every((message) => typeof message === 'string' && message.trim().length > 0) &&
+    (imageUrl === undefined || typeof imageUrl === 'string')
   );
+};
+
+const normalizeTarotCardData = (card: RawTarotCardData): TarotCardData => {
+  const imageUrl = typeof card.imageUrl === 'string' ? card.imageUrl : card.image_url;
+
+  return {
+    id: card.id,
+    nameJa: card.nameJa,
+    nameEn: card.nameEn,
+    meaning: card.meaning,
+    messages: card.messages,
+    imageUrl: typeof imageUrl === 'string' ? imageUrl : undefined,
+  };
 };
 
 const parseTarotCardsResponse = (value: unknown): TarotCardData[] => {
@@ -36,7 +56,7 @@ const parseTarotCardsResponse = (value: unknown): TarotCardData[] => {
     throw new Error('Tarot API response includes invalid card data.');
   }
 
-  return response.cards;
+  return response.cards.map((card) => normalizeTarotCardData(card as RawTarotCardData));
 };
 
 export const fetchTarotCards = async (): Promise<TarotCardData[]> => {
