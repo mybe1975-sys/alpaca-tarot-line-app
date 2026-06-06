@@ -1,8 +1,7 @@
-今回の変更内容を確認してください。
+今回の変更を確認し、問題なければ
 
-問題なければ
 git add .
-git commit
+git commit -m "Add lucky items from spreadsheet"
 git push
 
-まで実施してください。
+まで実行してください。

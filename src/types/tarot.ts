@@ -1,3 +1,8 @@
+export type LuckyItemData = {
+  luckyType: string;
+  luckyContent: string;
+};
+
 export type TarotCardData = {
   id: number;
   nameJa: string;
@@ -5,6 +10,7 @@ export type TarotCardData = {
   meaning: string;
   messages: string[];
   imageUrl?: string;
+  luckyItems?: LuckyItemData[];
 };
 
 export type TarotCardsResponse = {

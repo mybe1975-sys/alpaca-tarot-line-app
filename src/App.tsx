@@ -9,9 +9,9 @@ const drawThreeCards = (cards: TarotCardData[]): TarotCardData[] => {
   return [...cards].sort(() => Math.random() - 0.5).slice(0, 3);
 };
 
-const pickMessage = (card: TarotCardData): string => {
+const pickMessageIndex = (card: TarotCardData): number => {
   const index = Math.floor(Math.random() * card.messages.length);
-  return card.messages[index];
+  return index;
 };
 
 function App() {
@@ -40,8 +40,9 @@ function App() {
   };
 
   const handleSelectCard = (card: TarotCardData) => {
+    const messageIndex = pickMessageIndex(card);
     setSelectedCard(card);
-    setSelectedMessage(pickMessage(card));
+    setSelectedMessage(card.messages[messageIndex]);
     setScreen('result');
   };
 
@@ -65,7 +66,12 @@ function App() {
         <CardSelectScreen cards={drawnCards} onSelectCard={handleSelectCard} />
       )}
       {screen === 'result' && selectedCard && (
-        <ResultScreen card={selectedCard} message={selectedMessage} onReset={handleReset} />
+        <ResultScreen
+          card={selectedCard}
+          luckyItems={selectedCard.luckyItems ?? []}
+          message={selectedMessage}
+          onReset={handleReset}
+        />
       )}
     </main>
   );

@@ -1,13 +1,30 @@
 import TarotCard from './TarotCard';
-import type { TarotCardData } from '../types/tarot';
+import type { LuckyItemData, TarotCardData } from '../types/tarot';
 
 type ResultScreenProps = {
   card: TarotCardData;
+  luckyItems: LuckyItemData[];
   message: string;
   onReset: () => void;
 };
 
-function ResultScreen({ card, message, onReset }: ResultScreenProps) {
+const getLuckyLabel = (luckyType: string): string => {
+  const normalizedType = luckyType.trim().toLowerCase();
+
+  if (normalizedType === 'action' || normalizedType === 'ラッキーアクション') {
+    return 'ラッキーアクション';
+  }
+
+  if (normalizedType === 'item' || normalizedType === 'ラッキーアイテム') {
+    return 'ラッキーアイテム';
+  }
+
+  return 'ラッキー情報';
+};
+
+function ResultScreen({ card, luckyItems, message, onReset }: ResultScreenProps) {
+  const visibleLuckyItems = luckyItems.filter((luckyItem) => luckyItem.luckyContent.trim() !== '');
+
   return (
     <section className="screen result-screen" aria-labelledby="result-title">
       <div className="result-card-wrap">
@@ -28,6 +45,12 @@ function ResultScreen({ card, message, onReset }: ResultScreenProps) {
             <dt>今日のメッセージ</dt>
             <dd>{message}</dd>
           </div>
+          {visibleLuckyItems.map((luckyItem, index) => (
+            <div className="lucky-reading" key={`${luckyItem.luckyType}-${index}`}>
+              <dt>{getLuckyLabel(luckyItem.luckyType)}</dt>
+              <dd>{luckyItem.luckyContent}</dd>
+            </div>
+          ))}
         </dl>
 
         <div className="alpaca-balloon">
