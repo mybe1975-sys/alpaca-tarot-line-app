@@ -8,6 +8,8 @@ type RawTarotCardData = Omit<TarotCardData, 'imageUrl'> & {
   image_url?: unknown;
   luckyItems?: unknown;
   lucky_items?: unknown;
+  luckyItem?: unknown;
+  lucky_item?: unknown;
 };
 
 type RawLuckyItemData = Partial<LuckyItemData> & {
@@ -24,10 +26,7 @@ const isLuckyItemData = (value: unknown): value is RawLuckyItemData => {
   const luckyType = luckyItem.luckyType ?? luckyItem.lucky_type;
   const luckyContent = luckyItem.luckyContent ?? luckyItem.lucky_content;
 
-  return (
-    (luckyType === undefined || typeof luckyType === 'string') &&
-    (luckyContent === undefined || typeof luckyContent === 'string')
-  );
+  return luckyType !== undefined || luckyContent !== undefined;
 };
 
 const isTarotCardData = (value: unknown): value is TarotCardData => {
@@ -37,7 +36,7 @@ const isTarotCardData = (value: unknown): value is TarotCardData => {
 
   const card = value as Partial<RawTarotCardData>;
   const imageUrl = card.imageUrl ?? card.image_url;
-  const luckyItems = card.luckyItems ?? card.lucky_items;
+  const luckyItems = card.luckyItems ?? card.lucky_items ?? card.luckyItem ?? card.lucky_item;
 
   return (
     typeof card.id === 'number' &&
@@ -48,8 +47,7 @@ const isTarotCardData = (value: unknown): value is TarotCardData => {
     card.messages.length > 0 &&
     card.messages.every((message) => typeof message === 'string' && message.trim().length > 0) &&
     (imageUrl === undefined || typeof imageUrl === 'string') &&
-    (luckyItems === undefined ||
-      (Array.isArray(luckyItems) && luckyItems.every((luckyItem) => isLuckyItemData(luckyItem))))
+    isLuckyItemsValue(luckyItems)
   );
 };
 
@@ -58,18 +56,40 @@ const normalizeLuckyItemData = (luckyItem: RawLuckyItemData): LuckyItemData => {
   const luckyContent = luckyItem.luckyContent ?? luckyItem.lucky_content;
 
   return {
-    luckyType: typeof luckyType === 'string' ? luckyType : '',
-    luckyContent: typeof luckyContent === 'string' ? luckyContent : '',
+    luckyType: luckyType === undefined || luckyType === null ? '' : String(luckyType),
+    luckyContent: luckyContent === undefined || luckyContent === null ? '' : String(luckyContent),
   };
+};
+
+const isLuckyItemsValue = (value: unknown): boolean => {
+  if (value === undefined) {
+    return true;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every((luckyItem) => isLuckyItemData(luckyItem));
+  }
+
+  return isLuckyItemData(value);
+};
+
+const normalizeLuckyItemsValue = (value: unknown): LuckyItemData[] | undefined => {
+  if (Array.isArray(value)) {
+    return value
+      .filter((luckyItem) => isLuckyItemData(luckyItem))
+      .map((luckyItem) => normalizeLuckyItemData(luckyItem));
+  }
+
+  if (isLuckyItemData(value)) {
+    return [normalizeLuckyItemData(value)];
+  }
+
+  return undefined;
 };
 
 const normalizeTarotCardData = (card: RawTarotCardData): TarotCardData => {
   const imageUrl = typeof card.imageUrl === 'string' ? card.imageUrl : card.image_url;
-  const luckyItems = Array.isArray(card.luckyItems)
-    ? card.luckyItems
-    : Array.isArray(card.lucky_items)
-      ? card.lucky_items
-      : undefined;
+  const luckyItems = card.luckyItems ?? card.lucky_items ?? card.luckyItem ?? card.lucky_item;
 
   return {
     id: card.id,
@@ -78,7 +98,7 @@ const normalizeTarotCardData = (card: RawTarotCardData): TarotCardData => {
     meaning: card.meaning,
     messages: card.messages,
     imageUrl: typeof imageUrl === 'string' ? imageUrl : undefined,
-    luckyItems: luckyItems?.map((luckyItem) => normalizeLuckyItemData(luckyItem as RawLuckyItemData)),
+    luckyItems: normalizeLuckyItemsValue(luckyItems),
   };
 };
 
@@ -97,7 +117,9 @@ const parseTarotCardsResponse = (value: unknown): TarotCardData[] => {
     throw new Error('Tarot API response includes invalid card data.');
   }
 
-  return response.cards.map((card) => normalizeTarotCardData(card as RawTarotCardData));
+  const normalizedCards = response.cards.map((card) => normalizeTarotCardData(card as RawTarotCardData));
+  console.log('[tarotCards] normalized cards', normalizedCards);
+  return normalizedCards;
 };
 
 export const fetchTarotCards = async (): Promise<TarotCardData[]> => {
@@ -113,9 +135,10 @@ export const fetchTarotCards = async (): Promise<TarotCardData[]> => {
     }
 
     const data = (await response.json()) as unknown;
+    console.log('[tarotCards] received JSON', data);
     return parseTarotCardsResponse(data);
   } catch (error) {
-    console.error(error);
+    console.error('[tarotCards] failed to fetch or parse API response', error);
     return fallbackTarotCards;
   }
 };

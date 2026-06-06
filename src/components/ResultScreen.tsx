@@ -24,6 +24,13 @@ const getLuckyLabel = (luckyType: string): string => {
 
 function ResultScreen({ card, luckyItems, message, onReset }: ResultScreenProps) {
   const visibleLuckyItems = luckyItems.filter((luckyItem) => luckyItem.luckyContent.trim() !== '');
+  console.log('[ResultScreen] card lucky fields', {
+    luckyItems: card.luckyItems,
+    lucky_items: (card as { lucky_items?: unknown }).lucky_items,
+    luckyItem: (card as { luckyItem?: unknown }).luckyItem,
+    propLuckyItems: luckyItems,
+    visibleLuckyItems,
+  });
 
   return (
     <section className="screen result-screen" aria-labelledby="result-title">
