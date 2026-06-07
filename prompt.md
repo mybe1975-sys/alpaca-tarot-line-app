@@ -1,31 +1,24 @@
-タイトル画像差し替えをお願いします。
+太陽と審判の画像番号が逆になっているため整理したいです。
 
 現在
+137122_the-judgement.png
+137123_the-sun.png
 
-public/images/cards/alpaca/137701_title.jpg
+ですが、
 
-を配置済みです。
+137122_the-sun.png
+137123_the-judgement.png
 
-この画像をトップ画面のタイトル画像として使用してください。
+へ変更してください。
 
-また以下も確認してください。
+対応内容
 
-1. 現在トップ画面で使用している画像ファイル名
-2. 137701_title.jpg へ差し替え
-3. npm run build
-4. git add public/images/cards/alpaca/137701_title.jpg
+1. public/images/cards/alpaca のファイル名変更
+2. src/data/tarotCards.ts の imageUrl 修正
+3. READMEに記載があれば修正
+4. npm run build
 5. git commit
 6. git push
 
-まで実施してください。
-
-また、
-審判（137122_the-judgement.png）
-について、
-
-- スプレッドシートの image_url
-- 実ファイル名
-- アプリ表示
-
-の3点を確認し、
-22枚すべて正常表示されることを確認してください。
+その後、01_cards シート側は私が修正しますので、
+変更後の image_url 一覧を出力してください。

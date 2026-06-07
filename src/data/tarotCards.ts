@@ -233,7 +233,7 @@ export const tarotCards: TarotCardData[] = [
     id: 19,
     nameJa: '太陽',
     nameEn: 'The Sun',
-    imageUrl: '/images/cards/alpaca/137123_the-sun.png',
+    imageUrl: '/images/cards/alpaca/137122_the-sun.png',
     meaning: '喜び、成功、明るい展開',
     messages: [
       '明るい知らせや、気持ちが軽くなる出来事に出会えそうです。',
@@ -245,7 +245,7 @@ export const tarotCards: TarotCardData[] = [
     id: 20,
     nameJa: '審判',
     nameEn: 'Judgement',
-    imageUrl: '/images/cards/alpaca/137122_the-judgement.png',
+    imageUrl: '/images/cards/alpaca/137123_the-judgement.png',
     meaning: '目覚め、再評価、呼びかけ',
     messages: [
       'もう一度向き合うことで、前とは違う答えが見えてきます。',
