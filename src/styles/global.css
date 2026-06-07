@@ -360,17 +360,24 @@ h1 {
 
 .result-screen {
   justify-content: flex-start;
-  gap: 22px;
+  gap: 20px;
 }
 
 .result-card-wrap {
-  width: min(74vw, 300px);
-  margin-top: 8px;
-  margin-bottom: 4px;
+  width: min(80vw, 340px);
+  margin: 2px auto 2px;
+  display: grid;
+  place-items: center;
+}
+
+.result-card-wrap .tarot-card-static {
+  width: 100%;
+  max-width: none;
 }
 
 .result-panel {
-  width: 100%;
+  width: min(100%, 440px);
+  margin: 0 auto;
   padding: 20px;
   border-radius: 8px;
   background: rgba(255, 252, 246, 0.72);
@@ -524,7 +531,7 @@ h1 {
 
 @media (min-width: 600px) {
   .result-card-wrap {
-    width: 220px;
+    width: 230px;
   }
 }
 
