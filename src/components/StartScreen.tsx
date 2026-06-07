@@ -20,7 +20,12 @@ function StartScreen({ errorMessage, isLoading = false, onStart }: StartScreenPr
       <div className="title-area">
         <p className="eyebrow">Alpaca Tarot</p>
         <h1 id="app-title">アルパカタロット</h1>
-        <p className="lead">今日のあなたに、アルパカから小さなメッセージ</p>
+        {/* 表紙のサブタイトルは、指定どおり2行で読めるように改行を固定します。 */}
+        <p className="lead">
+          今のあなたに、
+          <br />
+          アルパカから小さなメッセージ
+        </p>
       </div>
 
       {errorMessage && <p className="error-text">{errorMessage}</p>}

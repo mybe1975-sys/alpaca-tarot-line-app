@@ -464,12 +464,12 @@ h1 {
 }
 
 .consultation-note {
-  max-width: 22rem;
+  width: min(100%, 22rem);
   margin: 0;
   color: #6f5f6f;
   font-size: 0.95rem;
   line-height: 1.8;
-  text-align: center;
+  text-align: left;
 }
 
 .alpaca-balloon {

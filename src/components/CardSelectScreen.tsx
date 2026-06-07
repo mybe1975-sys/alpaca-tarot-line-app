@@ -11,7 +11,12 @@ function CardSelectScreen({ cards, onSelectCard }: CardSelectScreenProps) {
     <section className="screen select-screen" aria-labelledby="select-title">
       <div className="compact-header">
         <p className="eyebrow">Choose one card</p>
-        <h1 id="select-title">気になるカードを1枚選んでください</h1>
+        {/* 選択画面の見出しは、スマホで読みやすい2行に固定します。 */}
+        <h1 id="select-title">
+          気になるカードを
+          <br />
+          1枚選んでください
+        </h1>
       </div>
 
       <div className="card-row" aria-label="タロットカードを3枚表示">
@@ -26,7 +31,7 @@ function CardSelectScreen({ cards, onSelectCard }: CardSelectScreenProps) {
         ))}
       </div>
 
-      <p className="hint-text">直感で、いちばん目に留まるカードをタップしてください。</p>
+      <p className="hint-text">直感で、いちばん目に留まるカードをタップ</p>
     </section>
   );
 }

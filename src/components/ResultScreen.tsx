@@ -54,8 +54,11 @@ function ResultScreen({ card, luckyItem, message, messageTitle, onReset }: Resul
         )}
       </div>
 
+      {/* 個別診断案内は、指定の位置を保ったまま読みやすい2行にします。 */}
       <p className="consultation-note">
-        もっと詳しく知りたい方は、あなただけのタロット占い個別診断もしています。ぜひお気軽にご相談ください。
+        もっと詳しく知りたい方は、あなただけのタロット
+        <br />
+        占い個別診断もしています。ぜひお気軽にご相談ください。
       </p>
 
       <button className="primary-button secondary-tone" type="button" onClick={onReset}>
