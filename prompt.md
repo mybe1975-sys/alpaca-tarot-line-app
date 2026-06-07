@@ -1,55 +1,23 @@
-依頼者から結果画面の表示内容について修正指示がありました。
-以下を優先して実装してください。
+title が表示されていません。
 
-対象は主に src/components/ResultScreen.tsx です。
-必要に応じて src/api/tarotCards.ts、src/types/tarot.ts、src/styles/global.css も確認してください。
+02_messages の D列(title) を表示したいです。
 
-修正要件：
+現状：
+message は表示されている
+lucky_type / lucky_content も表示されている
 
-1. 結果画面から「カードの意味」セクションを削除する
-   - 見出し「カードの意味」も削除
-   - meaning の本文表示も削除
-   - ただしデータとして meaning を保持するかどうかは任意。表示しないことを優先。
+しかし title が表示されない
 
-2. 見出し「今日のメッセージ」を削除する
-   - 見出しだけ削除し、メッセージ本文は表示する。
+確認してほしいこと：
 
-3. 02_messages の title と message を表示する
-   - title は message の上に表示する
-   - title / message それぞれの見出しは不要
-   - 表示例：
-     小さな一歩で、世界がひらく日
+1. GAS JSONに title が含まれているか確認
+2. ブラウザコンソールで受信JSONを確認
+3. tarotCards.ts の正規化処理で title が落ちていないか確認
+4. ResultScreen.tsx に title が渡っているか確認
+5. title が空でない場合は message の上に表示
 
-     まだ準備が完璧じゃなくても大丈夫。今のあなたには、軽やかに動き出す流れが来ています。...
-
-4. メッセージは、選ばれたカードに紐づく3件のうちランダムで1件だけ表示する
-   - title も message も同じ行・同じ index のものを使う
-   - lucky_type / lucky_content も同じ index のものを使う
-   - 3件分まとめて表示しないこと
-
-5. ラッキー情報は、表示されたメッセージと同行の1件だけ表示する
-   - lucky_type が「ラッキーアクション」なら「ラッキーアクション」と表示
-   - lucky_type が「ラッキーアイテム」なら「ラッキーアイテム」と表示
-   - lucky_content をその下に表示
-   - lucky_type または lucky_content が空なら、ラッキー欄は表示しない
-   - 同じカードの3件分をまとめて表示しない
-
-6. 固定コメント
-   「アルパカは、あなたのペースで進めば大丈夫と言っています。」
-   は削除する
-
-7. 「もう一度占う」ボタンの上に、個別診断への案内文を追加する
-   文言：
-   もっと詳しく知りたい方は、あなただけのタロット占い個別診断もしています。ぜひお気軽にご相談ください。
-
-8. 画面の見た目が崩れないようにCSSも必要なら調整する
-
-9. 初心者でも理解できるように、修正箇所には説明コメントを入れること
-
-10. 実装後に npm run build で確認すること
-
-11. 問題なければ
-    git add .
-    git commit -m "Update result screen message layout"
-    git push
-    まで実行すること
+修正後
+npm run build
+git commit
+git push
+まで実施してください

@@ -46,6 +46,13 @@ function App() {
   const handleSelectCard = (card: TarotCardData) => {
     // messageTitles/messages/luckyItems は同じ index で並ぶため、ここで1件だけ選びます。
     const messageIndex = pickMessageIndex(card);
+    console.log('[App] selected message data', {
+      messageIndex,
+      messageTitle: card.messageTitles?.[messageIndex],
+      message: card.messages[messageIndex],
+      luckyItem: card.luckyItems?.[messageIndex],
+      card,
+    });
     setSelectedCard(card);
     setSelectedMessageTitle(card.messageTitles?.[messageIndex] ?? '');
     setSelectedMessage(card.messages[messageIndex]);

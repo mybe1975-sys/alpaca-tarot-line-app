@@ -3,6 +3,10 @@ const SHEET_NAMES = {
   messages: '02_messages',
 };
 
+const MESSAGE_COLUMN_INDEXES = {
+  title: 3,
+};
+
 function doGet(e) {
   try {
     return createJsonOutput_(buildTarotCardsResponse_(), e);
@@ -70,7 +74,7 @@ function buildMessageGroupsByCardId_(messageRows) {
         messageGroupsByCardId[cardId] = [];
       }
       messageGroupsByCardId[cardId].push({
-        title: normalizeString_(row.title),
+        title: normalizeString_(row.title || row.__values[MESSAGE_COLUMN_INDEXES.title]),
         message: normalizeString_(row.message),
         luckyType: normalizeString_(row.lucky_type),
         luckyContent: normalizeString_(row.lucky_content),
@@ -100,7 +104,7 @@ function readSheetRows_(spreadsheet, sheetName) {
         }
         return row;
       },
-      { __rowIndex: rowIndex + 2 }
+      { __rowIndex: rowIndex + 2, __values: valuesRow }
     );
   });
 }

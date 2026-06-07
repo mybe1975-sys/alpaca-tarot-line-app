@@ -28,6 +28,7 @@ function ResultScreen({ card, luckyItem, message, messageTitle, onReset }: Resul
   const luckyType = luckyItem?.luckyType.trim() ?? '';
   const luckyContent = luckyItem?.luckyContent.trim() ?? '';
   const shouldShowLuckyItem = luckyType !== '' && luckyContent !== '';
+  console.log('[ResultScreen] message title data', { messageTitle, message, luckyItem, card });
 
   return (
     <section className="screen result-screen" aria-labelledby="result-title">

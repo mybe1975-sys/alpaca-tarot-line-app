@@ -127,6 +127,10 @@ const SHEET_NAMES = {
   settings: '03_settings',
 };
 
+const MESSAGE_COLUMN_INDEXES = {
+  title: 3,
+};
+
 function doGet(e) {
   const data = buildTarotCardsResponse_();
   return createJsonResponse_(data, e);
@@ -147,7 +151,7 @@ function buildTarotCardsResponse_() {
         result[cardId] = [];
       }
       result[cardId].push({
-        title: String(row.title || '').trim(),
+        title: String(row.title || row.__values[MESSAGE_COLUMN_INDEXES.title] || '').trim(),
         message: String(row.message || '').trim(),
         luckyType: String(row.lucky_type || '').trim(),
         luckyContent: String(row.lucky_content || '').trim(),
@@ -203,13 +207,13 @@ function readSheetObjects_(spreadsheet, sheetName) {
 
   const headers = values[0].map((header) => String(header).trim());
 
-  return values.slice(1).map((row) => {
+  return values.slice(1).map((row, rowIndex) => {
     return headers.reduce((object, header, index) => {
       if (header) {
         object[header] = row[index];
       }
       return object;
-    }, {});
+    }, { __rowIndex: rowIndex + 2, __values: row });
   });
 }
 
