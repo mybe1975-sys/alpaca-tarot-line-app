@@ -35,6 +35,7 @@ function buildTarotCardsResponse_() {
         nameEn: normalizeString_(row.name_en),
         imageUrl: normalizeString_(row.image_url),
         meaning: normalizeString_(row.meaning),
+        messageTitles: (messageGroupsByCardId[String(id)] || []).map((messageGroup) => messageGroup.title),
         messages: (messageGroupsByCardId[String(id)] || []).map((messageGroup) => messageGroup.message),
         luckyItems: (messageGroupsByCardId[String(id)] || []).map((messageGroup) => ({
           luckyType: messageGroup.luckyType,
@@ -69,6 +70,7 @@ function buildMessageGroupsByCardId_(messageRows) {
         messageGroupsByCardId[cardId] = [];
       }
       messageGroupsByCardId[cardId].push({
+        title: normalizeString_(row.title),
         message: normalizeString_(row.message),
         luckyType: normalizeString_(row.lucky_type),
         luckyContent: normalizeString_(row.lucky_content),

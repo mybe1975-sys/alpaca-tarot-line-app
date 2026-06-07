@@ -3,8 +3,9 @@ import type { LuckyItemData, TarotCardData } from '../types/tarot';
 
 type ResultScreenProps = {
   card: TarotCardData;
-  luckyItems: LuckyItemData[];
+  luckyItem: LuckyItemData | null;
   message: string;
+  messageTitle: string;
   onReset: () => void;
 };
 
@@ -22,15 +23,11 @@ const getLuckyLabel = (luckyType: string): string => {
   return 'ラッキー情報';
 };
 
-function ResultScreen({ card, luckyItems, message, onReset }: ResultScreenProps) {
-  const visibleLuckyItems = luckyItems.filter((luckyItem) => luckyItem.luckyContent.trim() !== '');
-  console.log('[ResultScreen] card lucky fields', {
-    luckyItems: card.luckyItems,
-    lucky_items: (card as { lucky_items?: unknown }).lucky_items,
-    luckyItem: (card as { luckyItem?: unknown }).luckyItem,
-    propLuckyItems: luckyItems,
-    visibleLuckyItems,
-  });
+function ResultScreen({ card, luckyItem, message, messageTitle, onReset }: ResultScreenProps) {
+  // ラッキー情報は、選ばれたメッセージと同じ index の1件だけ表示します。
+  const luckyType = luckyItem?.luckyType.trim() ?? '';
+  const luckyContent = luckyItem?.luckyContent.trim() ?? '';
+  const shouldShowLuckyItem = luckyType !== '' && luckyContent !== '';
 
   return (
     <section className="screen result-screen" aria-labelledby="result-title">
@@ -43,30 +40,22 @@ function ResultScreen({ card, luckyItems, message, onReset }: ResultScreenProps)
         <h1 id="result-title">{card.nameJa}</h1>
         <p className="english-name">{card.nameEn}</p>
 
-        <dl className="reading-list">
-          <div>
-            <dt>カードの意味</dt>
-            <dd>{card.meaning}</dd>
-          </div>
-          <div>
-            <dt>今日のメッセージ</dt>
-            <dd>{message}</dd>
-          </div>
-          {visibleLuckyItems.map((luckyItem, index) => (
-            <div className="lucky-reading" key={`${luckyItem.luckyType}-${index}`}>
-              <dt>{getLuckyLabel(luckyItem.luckyType)}</dt>
-              <dd>{luckyItem.luckyContent}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="alpaca-balloon">
-          <span className="mini-alpaca" aria-hidden="true">
-            ᵔᴥᵔ
-          </span>
-          <p>アルパカは、あなたのペースで進めば大丈夫と言っています。</p>
+        <div className="message-reading">
+          {messageTitle.trim() !== '' && <p className="message-title">{messageTitle}</p>}
+          <p className="message-body">{message}</p>
         </div>
+
+        {shouldShowLuckyItem && luckyItem && (
+          <div className="lucky-reading">
+            <p className="lucky-label">{getLuckyLabel(luckyItem.luckyType)}</p>
+            <p className="lucky-content">{luckyItem.luckyContent}</p>
+          </div>
+        )}
       </div>
+
+      <p className="consultation-note">
+        もっと詳しく知りたい方は、あなただけのタロット占い個別診断もしています。ぜひお気軽にご相談ください。
+      </p>
 
       <button className="primary-button secondary-tone" type="button" onClick={onReset}>
         もう一度占う

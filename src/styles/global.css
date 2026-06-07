@@ -411,11 +411,57 @@ h1 {
   line-height: 1.8;
 }
 
+.message-reading {
+  display: grid;
+  gap: 14px;
+}
+
+.message-title {
+  margin: 0;
+  color: #3f3049;
+  font-size: 1.18rem;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.message-body {
+  margin: 0;
+  color: #4f4255;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
 .lucky-reading {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
   padding: 12px;
   border: 1px solid rgba(137, 104, 170, 0.18);
   border-radius: 8px;
   background: rgba(255, 248, 237, 0.78);
+}
+
+.lucky-label {
+  margin: 0;
+  color: #7b6394;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.lucky-content {
+  margin: 0;
+  color: #4f4255;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.consultation-note {
+  max-width: 22rem;
+  margin: 0;
+  color: #6f5f6f;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  text-align: center;
 }
 
 .alpaca-balloon {

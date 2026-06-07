@@ -3,9 +3,13 @@ import type { LuckyItemData, TarotCardData, TarotCardsResponse } from '../types/
 
 const tarotApiUrl = import.meta.env.VITE_TAROT_API_URL as string | undefined;
 
-type RawTarotCardData = Omit<TarotCardData, 'imageUrl'> & {
+type RawTarotCardData = Omit<TarotCardData, 'imageUrl' | 'messageTitles' | 'messages' | 'luckyItems'> & {
   imageUrl?: unknown;
   image_url?: unknown;
+  messages?: unknown;
+  messageTitles?: unknown;
+  message_titles?: unknown;
+  titles?: unknown;
   luckyItems?: unknown;
   lucky_items?: unknown;
   luckyItem?: unknown;
@@ -15,6 +19,15 @@ type RawTarotCardData = Omit<TarotCardData, 'imageUrl'> & {
 type RawLuckyItemData = Partial<LuckyItemData> & {
   lucky_type?: unknown;
   lucky_content?: unknown;
+};
+
+type RawMessageItemData = RawLuckyItemData & {
+  title?: unknown;
+  message?: unknown;
+};
+
+const isStringArrayValue = (value: unknown): boolean => {
+  return value === undefined || (Array.isArray(value) && value.every((item) => typeof item === 'string'));
 };
 
 const isLuckyItemData = (value: unknown): value is RawLuckyItemData => {
@@ -29,6 +42,10 @@ const isLuckyItemData = (value: unknown): value is RawLuckyItemData => {
   return luckyType !== undefined || luckyContent !== undefined;
 };
 
+const isMessageItemData = (value: unknown): value is RawMessageItemData => {
+  return Boolean(value && typeof value === 'object' && 'message' in value);
+};
+
 const isTarotCardData = (value: unknown): value is TarotCardData => {
   if (!value || typeof value !== 'object') {
     return false;
@@ -36,6 +53,7 @@ const isTarotCardData = (value: unknown): value is TarotCardData => {
 
   const card = value as Partial<RawTarotCardData>;
   const imageUrl = card.imageUrl ?? card.image_url;
+  const messageTitles = card.messageTitles ?? card.message_titles ?? card.titles;
   const luckyItems = card.luckyItems ?? card.lucky_items ?? card.luckyItem ?? card.lucky_item;
 
   return (
@@ -45,10 +63,19 @@ const isTarotCardData = (value: unknown): value is TarotCardData => {
     typeof card.meaning === 'string' &&
     Array.isArray(card.messages) &&
     card.messages.length > 0 &&
-    card.messages.every((message) => typeof message === 'string' && message.trim().length > 0) &&
+    card.messages.every((message: unknown) => {
+      return typeof message === 'string'
+        ? message.trim().length > 0
+        : isMessageItemData(message) && normalizeString(message.message).length > 0;
+    }) &&
     (imageUrl === undefined || typeof imageUrl === 'string') &&
+    isStringArrayValue(messageTitles) &&
     isLuckyItemsValue(luckyItems)
   );
+};
+
+const normalizeString = (value: unknown): string => {
+  return value === undefined || value === null ? '' : String(value);
 };
 
 const normalizeLuckyItemData = (luckyItem: RawLuckyItemData): LuckyItemData => {
@@ -56,8 +83,8 @@ const normalizeLuckyItemData = (luckyItem: RawLuckyItemData): LuckyItemData => {
   const luckyContent = luckyItem.luckyContent ?? luckyItem.lucky_content;
 
   return {
-    luckyType: luckyType === undefined || luckyType === null ? '' : String(luckyType),
-    luckyContent: luckyContent === undefined || luckyContent === null ? '' : String(luckyContent),
+    luckyType: normalizeString(luckyType),
+    luckyContent: normalizeString(luckyContent),
   };
 };
 
@@ -89,6 +116,19 @@ const normalizeLuckyItemsValue = (value: unknown): LuckyItemData[] | undefined =
 
 const normalizeTarotCardData = (card: RawTarotCardData): TarotCardData => {
   const imageUrl = typeof card.imageUrl === 'string' ? card.imageUrl : card.image_url;
+  const rawMessages = Array.isArray(card.messages) ? card.messages : [];
+  // GAS の返し方が配列分割でも行オブジェクトでも、同じ index の title/message/lucky に揃えます。
+  const messageItems = rawMessages.filter((message) => isMessageItemData(message));
+  const messageTitles = Array.isArray(card.messageTitles)
+    ? card.messageTitles
+    : Array.isArray(card.message_titles)
+      ? card.message_titles
+      : Array.isArray(card.titles)
+        ? card.titles
+        : messageItems.map((messageItem) => normalizeString(messageItem.title));
+  const messages = messageItems.length > 0
+    ? messageItems.map((messageItem) => normalizeString(messageItem.message))
+    : rawMessages.map((message) => normalizeString(message));
   const luckyItems = card.luckyItems ?? card.lucky_items ?? card.luckyItem ?? card.lucky_item;
 
   return {
@@ -96,9 +136,10 @@ const normalizeTarotCardData = (card: RawTarotCardData): TarotCardData => {
     nameJa: card.nameJa,
     nameEn: card.nameEn,
     meaning: card.meaning,
-    messages: card.messages,
+    messageTitles: messageTitles.map((title) => normalizeString(title)),
+    messages,
     imageUrl: typeof imageUrl === 'string' ? imageUrl : undefined,
-    luckyItems: normalizeLuckyItemsValue(luckyItems),
+    luckyItems: normalizeLuckyItemsValue(luckyItems) ?? messageItems.map((messageItem) => normalizeLuckyItemData(messageItem)),
   };
 };
 

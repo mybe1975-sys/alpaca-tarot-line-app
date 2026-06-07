@@ -92,6 +92,7 @@ sort_order
 
 ```text
 card_id
+title
 message
 lucky_type
 lucky_content
@@ -111,6 +112,7 @@ is_enabled
 - `is_enabled`: `FALSE` のカード・メッセージは API レスポンスから除外します。空欄または `TRUE` は有効として扱います。
 - `sort_order`: 任意です。未入力の場合は `card_id` またはシート上の順序で並びます。
 - `image_url`: React 側では `imageUrl` として返します。
+- `title`: 結果画面で本文の上に表示するメッセージタイトルです。
 - `lucky_type`: `action` または `item` を入力すると、React 側では「ラッキーアクション」または「ラッキーアイテム」として表示します。
 - `lucky_content`: 結果画面に表示するラッキー情報の内容です。
 
@@ -145,6 +147,7 @@ function buildTarotCardsResponse_() {
         result[cardId] = [];
       }
       result[cardId].push({
+        title: String(row.title || '').trim(),
         message: String(row.message || '').trim(),
         luckyType: String(row.lucky_type || '').trim(),
         luckyContent: String(row.lucky_content || '').trim(),
@@ -164,6 +167,7 @@ function buildTarotCardsResponse_() {
         nameEn: String(row.name_en || '').trim(),
         imageUrl: String(row.image_url || '').trim(),
         meaning: String(row.meaning || '').trim(),
+        messageTitles: (messageGroupsByCardId[id] || []).map((messageGroup) => messageGroup.title),
         messages: (messageGroupsByCardId[id] || []).map((messageGroup) => messageGroup.message),
         luckyItems: (messageGroupsByCardId[id] || []).map((messageGroup) => ({
           luckyType: messageGroup.luckyType,

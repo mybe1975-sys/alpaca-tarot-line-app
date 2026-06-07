@@ -3,7 +3,7 @@ import { fetchTarotCards } from './api/tarotCards';
 import CardSelectScreen from './components/CardSelectScreen';
 import ResultScreen from './components/ResultScreen';
 import StartScreen from './components/StartScreen';
-import type { AppScreen, TarotCardData } from './types/tarot';
+import type { AppScreen, LuckyItemData, TarotCardData } from './types/tarot';
 
 const drawThreeCards = (cards: TarotCardData[]): TarotCardData[] => {
   return [...cards].sort(() => Math.random() - 0.5).slice(0, 3);
@@ -18,7 +18,9 @@ function App() {
   const [screen, setScreen] = useState<AppScreen>('start');
   const [drawnCards, setDrawnCards] = useState<TarotCardData[]>([]);
   const [selectedCard, setSelectedCard] = useState<TarotCardData | null>(null);
+  const [selectedMessageTitle, setSelectedMessageTitle] = useState('');
   const [selectedMessage, setSelectedMessage] = useState('');
+  const [selectedLuckyItem, setSelectedLuckyItem] = useState<LuckyItemData | null>(null);
   const [isLoadingCards, setIsLoadingCards] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -26,7 +28,9 @@ function App() {
     setIsLoadingCards(true);
     setErrorMessage('');
     setSelectedCard(null);
+    setSelectedMessageTitle('');
     setSelectedMessage('');
+    setSelectedLuckyItem(null);
 
     try {
       const cards = await fetchTarotCards();
@@ -40,16 +44,21 @@ function App() {
   };
 
   const handleSelectCard = (card: TarotCardData) => {
+    // messageTitles/messages/luckyItems は同じ index で並ぶため、ここで1件だけ選びます。
     const messageIndex = pickMessageIndex(card);
     setSelectedCard(card);
+    setSelectedMessageTitle(card.messageTitles?.[messageIndex] ?? '');
     setSelectedMessage(card.messages[messageIndex]);
+    setSelectedLuckyItem(card.luckyItems?.[messageIndex] ?? null);
     setScreen('result');
   };
 
   const handleReset = () => {
     setDrawnCards([]);
     setSelectedCard(null);
+    setSelectedMessageTitle('');
     setSelectedMessage('');
+    setSelectedLuckyItem(null);
     setScreen('start');
   };
 
@@ -68,8 +77,9 @@ function App() {
       {screen === 'result' && selectedCard && (
         <ResultScreen
           card={selectedCard}
-          luckyItems={selectedCard.luckyItems ?? []}
+          luckyItem={selectedLuckyItem}
           message={selectedMessage}
+          messageTitle={selectedMessageTitle}
           onReset={handleReset}
         />
       )}
