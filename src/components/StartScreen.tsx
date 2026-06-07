@@ -7,15 +7,12 @@ type StartScreenProps = {
 function StartScreen({ errorMessage, isLoading = false, onStart }: StartScreenProps) {
   return (
     <section className="screen start-screen" aria-labelledby="app-title">
-      <div className="alpaca-mark" aria-hidden="true">
-        <span className="alpaca-ear alpaca-ear-left" />
-        <span className="alpaca-ear alpaca-ear-right" />
-        <span className="alpaca-face">
-          <span className="alpaca-eye alpaca-eye-left" />
-          <span className="alpaca-eye alpaca-eye-right" />
-          <span className="alpaca-nose" />
-        </span>
-      </div>
+      {/* トップ画面では、配置済みのタイトル画像をメインビジュアルとして表示します。 */}
+      <img
+        className="title-image"
+        src="/images/cards/alpaca/137701_title.jpg"
+        alt="アルパカタロット"
+      />
 
       <div className="title-area">
         <p className="eyebrow">Alpaca Tarot</p>
