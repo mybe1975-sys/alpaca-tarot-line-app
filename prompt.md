@@ -1,23 +1,11 @@
-title が表示されていません。
+結果画面のタロットカード画像を、スマホ表示で少し大きくしてください。
 
-02_messages の D列(title) を表示したいです。
-
-現状：
-message は表示されている
-lucky_type / lucky_content も表示されている
-
-しかし title が表示されない
-
-確認してほしいこと：
-
-1. GAS JSONに title が含まれているか確認
-2. ブラウザコンソールで受信JSONを確認
-3. tarotCards.ts の正規化処理で title が落ちていないか確認
-4. ResultScreen.tsx に title が渡っているか確認
-5. title が空でない場合は message の上に表示
-
-修正後
-npm run build
-git commit
-git push
-まで実施してください
+要件：
+1. ResultScreen のカード画像を現在より大きくする
+2. スマホ表示ではカード画像の幅を画面幅の70〜75%程度にする
+3. ただし大きくなりすぎないよう max-width を設定する
+4. PC表示では今より少し大きい程度でよい
+5. 画像の角丸、影、余白は現在の雰囲気を維持する
+6. メッセージカードとの間隔が詰まりすぎないよう調整する
+7. npm run build で確認
+8. 問題なければ commit / push まで実行

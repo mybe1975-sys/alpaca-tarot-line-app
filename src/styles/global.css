@@ -360,12 +360,13 @@ h1 {
 
 .result-screen {
   justify-content: flex-start;
-  gap: 18px;
+  gap: 22px;
 }
 
 .result-card-wrap {
-  width: min(48vw, 164px);
-  margin-top: 6px;
+  width: min(74vw, 300px);
+  margin-top: 8px;
+  margin-bottom: 4px;
 }
 
 .result-panel {
@@ -518,6 +519,12 @@ h1 {
 
   .result-panel {
     padding: 16px;
+  }
+}
+
+@media (min-width: 600px) {
+  .result-card-wrap {
+    width: 220px;
   }
 }
 
